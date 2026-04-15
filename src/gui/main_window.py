@@ -21,6 +21,7 @@ from ..core.keyword_matcher import KeywordMatcher, MatchResult
 from .collection_dialog import CollectionDialog
 from .fill_dialog import AutoFillDialog
 from .field_config_dialog import open_field_config_editor
+from .db_schema_dialog import open_db_schema_editor
 
 
 class MainWindow(QMainWindow):
@@ -65,6 +66,10 @@ class MainWindow(QMainWindow):
         self.btn_field_config = QPushButton("字段配置")
         self.btn_field_config.clicked.connect(self._on_open_field_config)
         toolbar.addWidget(self.btn_field_config)
+
+        self.btn_db_config = QPushButton("数据库配置")
+        self.btn_db_config.clicked.connect(self._on_open_db_schema)
+        toolbar.addWidget(self.btn_db_config)
 
         toolbar.addStretch()
 
@@ -142,6 +147,10 @@ class MainWindow(QMainWindow):
     def _on_open_field_config(self):
         """打开字段配置编辑器"""
         open_field_config_editor(self.config_loader, self)
+
+    def _on_open_db_schema(self):
+        """打开数据库表结构配置编辑器"""
+        open_db_schema_editor(self.config_loader, self)
 
 
 class AddWorkorderDialog(QDialog):

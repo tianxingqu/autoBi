@@ -1,0 +1,218 @@
+# 数据库表结构配置
+# 定义工单系统的数据库表结构
+
+tables:
+  # 工单表
+  workorders:
+    table_name: "workorders"
+    description: "工单主表"
+
+    columns:
+      - name: "id"
+        type: "INTEGER"
+        primary_key: true
+        autoincrement: true
+        nullable: false
+
+      - name: "ticket_no"
+        type: "TEXT"
+        unique: true
+        nullable: false
+        description: "工单号"
+
+      - name: "title"
+        type: "TEXT"
+        description: "工单标题"
+
+      - name: "status"
+        type: "TEXT"
+        default: "draft"
+        description: "工单状态"
+
+      - name: "priority"
+        type: "TEXT"
+        description: "优先级"
+
+      - name: "problem_type"
+        type: "TEXT"
+        description: "问题类型"
+
+      - name: "description"
+        type: "TEXT"
+        description: "问题描述"
+
+      - name: "host_ips"
+        type: "TEXT"
+        description: "服务器IP列表，逗号分隔"
+
+      - name: "error_codes"
+        type: "TEXT"
+        description: "错误码列表"
+
+      - name: "extracted_data"
+        type: "TEXT"
+        description: "提取的原始数据(JSON格式)"
+
+      - name: "created_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
+        description: "创建时间"
+
+      - name: "updated_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
+        description: "更新时间"
+
+  # 截图表
+  screenshots:
+    table_name: "screenshots"
+    description: "收集的截图"
+
+    columns:
+      - name: "id"
+        type: "INTEGER"
+        primary_key: true
+        autoincrement: true
+
+      - name: "ticket_id"
+        type: "INTEGER"
+        nullable: false
+        foreign_key: "workorders(id)"
+        description: "关联工单ID"
+
+      - name: "file_path"
+        type: "TEXT"
+        nullable: false
+        description: "截图文件路径"
+
+      - name: "sequence"
+        type: "INTEGER"
+        default: 0
+        description: "顺序号"
+
+      - name: "selected"
+        type: "INTEGER"
+        default: 0
+        description: "是否选中(0/1)"
+
+      - name: "note"
+        type: "TEXT"
+        description: "备注"
+
+      - name: "created_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
+
+  # 聊天记录表
+  chat_messages:
+    table_name: "chat_messages"
+    description: "聊天记录"
+
+    columns:
+      - name: "id"
+        type: "INTEGER"
+        primary_key: true
+        autoincrement: true
+
+      - name: "ticket_id"
+        type: "INTEGER"
+        nullable: false
+        foreign_key: "workorders(id)"
+
+      - name: "sender"
+        type: "TEXT"
+        description: "发送者"
+
+      - name: "content"
+        type: "TEXT"
+        description: "消息内容"
+
+      - name: "timestamp"
+        type: "TEXT"
+        description: "消息时间"
+
+      - name: "selected"
+        type: "INTEGER"
+        default: 0
+
+      - name: "created_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
+
+  # 附件表
+  attachments:
+    table_name: "attachments"
+    description: "附件表"
+
+    columns:
+      - name: "id"
+        type: "INTEGER"
+        primary_key: true
+        autoincrement: true
+
+      - name: "ticket_id"
+        type: "INTEGER"
+        nullable: false
+        foreign_key: "workorders(id)"
+
+      - name: "file_path"
+        type: "TEXT"
+        nullable: false
+        description: "附件路径"
+
+      - name: "file_name"
+        type: "TEXT"
+        description: "文件名"
+
+      - name: "file_type"
+        type: "TEXT"
+        description: "文件类型"
+
+      - name: "file_size"
+        type: "INTEGER"
+        description: "文件大小(字节)"
+
+      - name: "selected"
+        type: "INTEGER"
+        default: 0
+
+      - name: "note"
+        type: "TEXT"
+
+      - name: "created_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
+
+  # 自定义字段扩展表
+  # 用于存储工单的扩展字段
+  workorder_ext:
+    table_name: "workorder_ext"
+    description: "工单扩展字段"
+
+    columns:
+      - name: "id"
+        type: "INTEGER"
+        primary_key: true
+        autoincrement: true
+
+      - name: "ticket_id"
+        type: "INTEGER"
+        nullable: false
+        foreign_key: "workorders(id)"
+
+      - name: "field_name"
+        type: "TEXT"
+        nullable: false
+        description: "字段名称"
+
+      - name: "field_value"
+        type: "TEXT"
+        description: "字段值"
+
+      - name: "field_type"
+        type: "TEXT"
+        description: "字段类型(text/number/date/...)"
+
+      - name: "created_at"
+        type: "TEXT"
+        default: "CURRENT_TIMESTAMP"
