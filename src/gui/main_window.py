@@ -22,6 +22,7 @@ from .collection_dialog import CollectionDialog
 from .fill_dialog import AutoFillDialog
 from .field_config_dialog import open_field_config_editor
 from .db_schema_dialog import open_db_schema_editor
+from .settings_dialog import open_settings_dialog
 
 
 class MainWindow(QMainWindow):
@@ -70,6 +71,10 @@ class MainWindow(QMainWindow):
         self.btn_db_config = QPushButton("数据库配置")
         self.btn_db_config.clicked.connect(self._on_open_db_schema)
         toolbar.addWidget(self.btn_db_config)
+
+        self.btn_settings = QPushButton("设置")
+        self.btn_settings.clicked.connect(self._on_open_settings)
+        toolbar.addWidget(self.btn_settings)
 
         toolbar.addStretch()
 
@@ -151,6 +156,10 @@ class MainWindow(QMainWindow):
     def _on_open_db_schema(self):
         """打开数据库表结构配置编辑器"""
         open_db_schema_editor(self.config_loader, self)
+
+    def _on_open_settings(self):
+        """打开设置对话框"""
+        open_settings_dialog(self.config_loader, self)
 
 
 class AddWorkorderDialog(QDialog):

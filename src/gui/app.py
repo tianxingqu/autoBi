@@ -17,6 +17,7 @@ from src.core.config_loader import ConfigLoader
 from src.core.logger import setup_logger
 from src.database import Database
 from src.gui.main_window import MainWindow
+from src.gui.theme import ThemeManager
 
 
 def main():
@@ -33,6 +34,10 @@ def main():
     # 启动 GUI
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')  # 使用 Fusion 风格，更现代
+
+    # 应用主题
+    theme_manager = ThemeManager(config_loader)
+    theme_manager.apply_theme(app)
 
     window = MainWindow(db, config_loader)
     window.show()

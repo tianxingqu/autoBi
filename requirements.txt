@@ -28,3 +28,6 @@ asyncio>=3.4.3
 
 # 数据验证
 pydantic>=2.0.0
+
+# UI 美化
+qdarkstyle>=2.8.1
