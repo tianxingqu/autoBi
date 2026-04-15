@@ -20,6 +20,7 @@ from ..database import Database
 from ..core.keyword_matcher import KeywordMatcher, MatchResult
 from .collection_dialog import CollectionDialog
 from .fill_dialog import AutoFillDialog
+from .field_config_dialog import open_field_config_editor
 
 
 class MainWindow(QMainWindow):
@@ -60,6 +61,10 @@ class MainWindow(QMainWindow):
         self.btn_export = QPushButton("导出")
         self.btn_export.clicked.connect(self._on_export)
         toolbar.addWidget(self.btn_export)
+
+        self.btn_field_config = QPushButton("字段配置")
+        self.btn_field_config.clicked.connect(self._on_open_field_config)
+        toolbar.addWidget(self.btn_field_config)
 
         toolbar.addStretch()
 
@@ -133,6 +138,10 @@ class MainWindow(QMainWindow):
             with open(path, 'w', encoding='utf-8') as f:
                 json.dump(workorder, f, ensure_ascii=False, indent=2)
             QMessageBox.information(self, "成功", f"已导出到 {path}")
+
+    def _on_open_field_config(self):
+        """打开字段配置编辑器"""
+        open_field_config_editor(self.config_loader, self)
 
 
 class AddWorkorderDialog(QDialog):
