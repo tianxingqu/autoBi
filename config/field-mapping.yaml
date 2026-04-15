@@ -1,0 +1,61 @@
+# 工单系统字段映射配置
+# field_type: text | dropdown | popup | checkbox
+
+ticket_system:
+  # 工单系统 URL
+  url: "http://itsm.company.com"
+
+  # 是否需要登录
+  login_required: true
+
+  # 登录信息（建议使用环境变量或密钥管理）
+  # username: "${USERNAME}"
+  # password: "${PASSWORD}"
+
+  # 字段映射列表
+  fields:
+    - name: "工单号"
+      type: "text"
+      selector: "#ticket-id"
+      source: "input"  # input=手动输入, extracted=从消息提取
+      default: ""     # 如果是 input 类型，填写默认值
+
+    - name: "问题类型"
+      type: "dropdown"
+      selector: "#problem-type"
+      source: "extracted"
+      extract_key: "problem_type"
+
+    - name: "服务器IP"
+      type: "text"
+      selector: "#server-ip"
+      source: "extracted"
+      extract_key: "host_ips"
+
+    - name: "优先级"
+      type: "dropdown"
+      selector: "#priority"
+      source: "extracted"
+      extract_key: "priority"
+
+    - name: "影响范围"
+      type: "popup"
+      selector: "#impact-scope"
+      popup_trigger: "#impact-scope .el-input__inner"
+      popup_selector: ".el-dialog__body .el-select"
+      source: "extracted"
+      extract_key: "impact_scope"
+
+    - name: "问题描述"
+      type: "text"
+      selector: "#description"
+      source: "extracted"
+      extract_key: "description"
+      multiline: true
+
+    - name: "错误日志"
+      type: "text"
+      selector: "#error-log"
+      source: "extracted"
+      extract_key: "error_codes"
+      multiline: true

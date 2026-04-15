@@ -1,0 +1,30 @@
+# Welink 桌面自动化
+pywinauto>=0.6.8
+
+# 工单系统网页自动化
+playwright>=1.40.0
+
+# PyQt5 GUI
+PyQt5>=5.15.0
+
+# 图像处理（PIL 用于截图）
+Pillow>=10.0.0
+
+# pywin32 用于 Windows API
+pywin32>=300
+pypiwin32>=223
+
+# 配置管理
+pyyaml>=6.0.1
+
+# 日志
+loguru>=3.0.0
+
+# 命令行参数
+click>=8.1.0
+
+# 异步支持
+asyncio>=3.4.3
+
+# 数据验证
+pydantic>=2.0.0

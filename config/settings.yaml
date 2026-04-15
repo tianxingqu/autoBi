@@ -1,0 +1,55 @@
+# 全局设置
+
+welink:
+  # Welink 窗口标题（用于定位窗口）
+  window_title: "Welink"
+
+  # Welink 可执行文件路径（用于自动启动）
+  executable_path: "C:\\Program Files\\Welink\\Welink.exe"
+
+  # 消息读取配置
+  messages:
+    # 初始加载消息数量
+    initial_count: 100
+    # 滚动加载步长
+    scroll_step: 50
+    # 消息加载超时（秒）
+    timeout: 30
+
+  # UI 定位策略优先级
+  locator_strategies:
+    - "window_spec"
+    - "best_practice"
+    - "image"
+
+workorder:
+  # 是否自动打开工单系统
+  auto_open: true
+
+  # 填充前是否等待用户确认
+  confirm_before_fill: true
+
+  # 提交前是否等待用户确认
+  confirm_before_submit: false
+
+  # 表单填充后等待时间（秒）
+  fill_delay: 1
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  rotation: "00:00"  # 每天零点轮转
+  retention: "7 days"
+  save_to_file: true
+
+# 断点恢复
+checkpoint:
+  enabled: true
+  directory: "checkpoints"
+  auto_resume: false  # 是否自动从断点恢复
+
+# 调试模式
+debug:
+  enabled: false
+  screenshot_on_error: true
+  save_html_on_error: true
