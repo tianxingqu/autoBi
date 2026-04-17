@@ -80,7 +80,8 @@ class MainWindow(QMainWindow):
 
         # 工单列表
         self.table = QTableWidget()
-        self.table.setColumns(['ID', '工单号', '标题', '状态', '优先级', '创建时间'])
+        self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(['ID', '工单号', '标题', '状态', '优先级', '创建时间'])
         self.table.setColumnWidth(0, 50)
         self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 300)

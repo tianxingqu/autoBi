@@ -156,13 +156,14 @@ class WelinkCollector:
                 (bmpinfo['bmWidth'], bmpinfo['bmHeight']),
                 bmpstr, 'raw', 'BGRX', 0, 1
             )
-            img.save(filepath)
-
-            # 释放资源
-            win32gui.DeleteObject(saveBitMap.GetHandle())
-            saveDC.DeleteDC()
-            mfcDC.DeleteDC()
-            win32gui.ReleaseDC(hwnd, hwndDC)
+            try:
+                img.save(filepath)
+            finally:
+                # 释放资源
+                win32gui.DeleteObject(saveBitMap.GetHandle())
+                saveDC.DeleteDC()
+                mfcDC.DeleteDC()
+                win32gui.ReleaseDC(hwnd, hwndDC)
 
         except ImportError as e:
             logger.warning(f"截图依赖未安装: {e}")

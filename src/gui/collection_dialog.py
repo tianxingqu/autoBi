@@ -39,6 +39,11 @@ class CollectionWorker(QThread):
         self.ticket_no = ticket_no
         self.collector = collector
         self.keyword_matcher = keyword_matcher
+        self._stop_flag = False
+
+    def stop(self):
+        """请求停止工作线程"""
+        self._stop_flag = True
 
     def run(self):
         """执行收集"""
@@ -185,6 +190,10 @@ class CollectionDialog(QDialog):
         self.db = db
         self.config_loader = config_loader
         self.keyword_matcher = KeywordMatcher(config_loader)
+
+        # 根据 ticket_no 获取 ticket_id
+        workorder = db.get_workorder_by_ticket_no(ticket_no)
+        self.ticket_id = workorder['id'] if workorder else None
 
         self.collector = WelinkCollector(config_loader)
         self.worker: Optional[CollectionWorker] = None
@@ -357,8 +366,8 @@ class CollectionDialog(QDialog):
     def closeEvent(self, event):
         """关闭时清理"""
         if self.worker and self.worker.isRunning():
-            self.worker.terminate()
-            self.worker.wait()
+            self.worker.stop()
+            self.worker.wait(1000)  # 最多等待1秒
         try:
             self.collector.close()
         except Exception:

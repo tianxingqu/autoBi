@@ -198,8 +198,9 @@ class Database:
         # 获取表结构
         columns = self._get_table_columns("workorders")
 
-        # 过滤有效的列
-        valid_kwargs = {k: v for k, v in kwargs.items() if k in columns}
+        # 过滤有效的列（排除 ticket_no 和 title，它们单独处理）
+        excluded = {"ticket_no", "title"}
+        valid_kwargs = {k: v for k, v in kwargs.items() if k in columns and k not in excluded}
 
         if valid_kwargs:
             cols = ", ".join(valid_kwargs.keys())

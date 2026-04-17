@@ -205,7 +205,8 @@ class TableEditor(QDialog):
         layout.addWidget(QLabel("列定义:"))
 
         self.column_table = QTableWidget()
-        self.column_table.setColumns(['列名', '类型', '主键', '自增', '唯一', '可空', '默认值'])
+        self.column_table.setColumnCount(7)
+        self.column_table.setHorizontalHeaderLabels(['列名', '类型', '主键', '自增', '唯一', '可空', '默认值'])
         self.column_table.setColumnWidth(0, 120)
         self.column_table.setColumnWidth(1, 120)
         self.column_table.setColumnWidth(2, 50)

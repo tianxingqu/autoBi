@@ -37,6 +37,15 @@ class FieldEditor(QDialog):
         "popup": "弹窗选择",
         "checkbox": "复选框"
     }
+    EXTRACT_KEYS = ["problem_type", "priority", "host_ips", "error_codes", "ticket_refs", "description"]
+    EXTRACT_KEY_LABELS = {
+        "problem_type": "问题类型",
+        "priority": "优先级",
+        "host_ips": "服务器IP",
+        "error_codes": "错误码",
+        "ticket_refs": "工单引用",
+        "description": "问题描述"
+    }
 
     def __init__(self, field: Optional[Dict[str, Any]] = None, parent=None):
         super().__init__(parent)
@@ -101,14 +110,9 @@ class FieldEditor(QDialog):
         extracted_layout = QVBoxLayout()
         extracted_widget.setLayout(extracted_layout)
         self.extract_key_combo = QComboBox()
-        self.extract_key_combo.addItems([
-            "problem_type (问题类型)",
-            "priority (优先级)",
-            "host_ips (服务器IP)",
-            "error_codes (错误码)",
-            "ticket_refs (工单引用)",
-            "description (问题描述)"
-        ])
+        for key in self.EXTRACT_KEYS:
+            label = f"{key} ({self.EXTRACT_KEY_LABELS[key]})"
+            self.extract_key_combo.addItem(label, key)
         extracted_layout.addWidget(QLabel("提取字段:"))
         extracted_layout.addWidget(self.extract_key_combo)
         self.source_stack.addWidget(extracted_widget)
@@ -203,10 +207,9 @@ class FieldEditor(QDialog):
             self.default_input.setText(self.field.get("default", ""))
         elif source == "extracted":
             extract_key = self.field.get("extract_key", "")
-            for i, key in enumerate(["problem_type", "priority", "host_ips", "error_codes", "ticket_refs", "description"]):
-                if key == extract_key:
-                    self.extract_key_combo.setCurrentIndex(i)
-                    break
+            idx = self.extract_key_combo.findData(extract_key)
+            if idx >= 0:
+                self.extract_key_combo.setCurrentIndex(idx)
         elif source == "template":
             self.template_input.setText(self.field.get("template", ""))
 
@@ -237,7 +240,7 @@ class FieldEditor(QDialog):
         if source == "input":
             field["default"] = self.default_input.text()
         elif source == "extracted":
-            field["extract_key"] = ["problem_type", "priority", "host_ips", "error_codes", "ticket_refs", "description"][self.extract_key_combo.currentIndex()]
+            field["extract_key"] = self.extract_key_combo.currentData()
         elif source == "template":
             field["template"] = self.template_input.toPlainText()
 
