@@ -9,7 +9,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QTabWidget, QWidget, QComboBox, QCheckBox, QGroupBox,
-    QFormLayout, QSlider, QValueLabel, QMessageBox
+    QFormLayout, QSlider, QMessageBox
 )
 from PyQt5.QtCore import Qt
 
@@ -235,8 +235,8 @@ class SettingsDialog(QDialog):
         self.layout_widget.save_settings()
 
         # 应用主题
-        from .app import QApplication
-        app = QApplication.instance()
+        from PyQt5 import QtWidgets
+        app = QtWidgets.QApplication.instance()
         if app:
             self.theme_manager.apply_theme(app, selected_theme)
 
