@@ -127,7 +127,7 @@ class LayoutSettingsWidget(QWidget):
         panel_group = QGroupBox("面板显示")
         panel_layout = QVBoxLayout()
         panel_group.setLayout(panel_layout)
-        layout.addWidget(panel_layout)
+        layout.addWidget(panel_group)
 
         self.screenshot_check = QCheckBox("显示截图列表")
         self.screenshot_check.setChecked(
