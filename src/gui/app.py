@@ -7,8 +7,8 @@ PyQt5 GUI 入口
 import sys
 from pathlib import Path
 
-# 添加 src 目录到路径
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# 添加项目根目录到路径
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from loguru import logger
 from PyQt5 import QtWidgets

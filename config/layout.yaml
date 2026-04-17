@@ -1,0 +1,22 @@
+main_window:
+  width: 1000
+  height: 700
+  x: 100
+  y: 100
+  splitter_ratios:
+    field_config:
+    - 1
+    - 1
+    db_schema:
+    - 1
+    - 2
+toolbar_button_order:
+- btn_add
+- btn_refresh
+- btn_export
+- btn_field_config
+- btn_db_config
+- btn_settings
+panels_visible:
+  screenshot_list: true
+  chat_list: true
